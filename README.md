@@ -11,7 +11,7 @@ Coinbase provides an [API](https://developers.coinbase.com) that developers can 
 * [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation)
 * [Coinbase Account & API Credentials](https://developers.coinbase.com/docs/wallet/api-key-authentication)
 * [Docker](https://hub.docker.com/editions/community/docker-ce-desktop-mac/)
-[Virtualenv]()
+* [Virtualenv](https://virtualenv.pypa.io/en/latest/installation.html)
 
 ## Getting Started
 This project assumes that you have installed and configured the AWS Command Line Interface (CLI). In the root directory, run the following command to create a Python virtual environment, assuming that you have the `virtualenv` package installed.
