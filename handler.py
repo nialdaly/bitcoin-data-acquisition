@@ -18,7 +18,6 @@ def main(event, context):
         api_version='2017-12-30'
     )
     
-
     btc_buy_price = client.get_buy_price(currency_pair='BTC-GBP')
 
     # Retrieves current time
