@@ -1,7 +1,7 @@
 # Bitcoin Data Acquisition
-The following project will demonstrate the process of creating a serverless bitcoin data acquisition pattern. This pattern pulls Bitcoin price data from [Coinbase](https://www.coinbase.com) at 1 minute intervals. Coinbase provides an [API](https://developers.coinbase.com) that developers can use to buy, sell and access cryptocurrency price data. The data is then persisted in AWS DynamoDB, Amazon's proprietary NoSQL database solution.
+The following project will demonstrate the process of creating a serverless bitcoin data acquisition pattern. This pattern pulls Bitcoin price data from [Coinbase](https://www.coinbase.com) at 10 minute intervals using AWS Lambda. The Lambda function is scheduled to run using EventBridge, Amazon's serverless event bus.
 
-The project makes use of Docker, AWS Lambda, Amazon CloudWatch, AWS DynamoDB, Serverless Framework and the Coinbase Digital API.
+Coinbase provides an [API](https://developers.coinbase.com) that developers can use to buy, sell and access cryptocurrency price data. The data is then persisted in AWS DynamoDB, Amazon's proprietary NoSQL database solution. The project makes use of Docker, AWS Lambda, Amazon EventBridge, AWS DynamoDB, Serverless Framework and the Coinbase Digital API.
 
 ## Prerequisites
 * [Serverless Framework](https://www.serverless.com/framework/docs/providers/aws/guide/installation/)
@@ -35,4 +35,5 @@ The resources can then be deployed by running `serverless deploy` which will use
 The resources created in this pattern can be deleted using the `serverless remove` command. To deactivate the virtual environment, `venv`, simply run `deactivate`.
 
 ## Additional Resources
-*[Handle Python packaging in Lambda](https://www.serverless.com/blog/serverless-python-packaging)
+* [Handle Python packaging in Lambda](https://www.serverless.com/blog/serverless-python-packaging)
+* [Scheduling Lambda functions with EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/run-lambda-schedule.html)
