@@ -1,0 +1,67 @@
+service: bitcoin-data-acquisition
+app: bitcoin-data-acquisition
+
+plugins:
+  - serverless-python-requirements
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+  secrets: ${file(secrets.json)}
+  tableName: 'bitcoin-data-table-${self:provider.stage}'
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+  region: eu-west-1
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource: "*"
+
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - { "Fn::GetAtt": ["BitcoinDataTable", "Arn" ] }
+
+  environment:
+    bitcoin_data_table: ${self:custom.tableName}
+
+# Lambda Function
+functions:
+  function:
+    handler: handler.main
+    events:
+      # Sets the Lambda to trigger every minute
+      - schedule: rate(10 minutes)
+
+    environment:
+      COINBASE_API_KEY: ${self:custom.secrets.COINBASE_API_KEY} 
+      COINBASE_API_SECRET: ${self:custom.secrets.COINBASE_API_SECRET}
+
+# DynamoDB Table
+resources:
+  Resources:
+    BitcoinDataTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: timestamp
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: timestamp
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
